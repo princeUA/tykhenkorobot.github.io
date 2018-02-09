@@ -9,7 +9,7 @@ class Board extends Component{
   constructor(props){
     super(props);
     this.state = {
-
+      size: 15
     }
   }
 
@@ -35,6 +35,13 @@ class Board extends Component{
       )
     })
   }
+
+  onSizeChange(e){
+    this.setState({
+      size: e.target.value
+    });
+  }
+
   componentDidUpdate(){
     if(this.props.maze.running){
       setTimeout(() => this.props.robotGoing(this.props.maze.dirrection), 200);
@@ -45,7 +52,9 @@ class Board extends Component{
     return(
       <div>
         <button className="start-btn" type="button" onClick={() => this.props.robotStart()}>Start</button>
-        <button className="start-btn" type="button" onClick={() => this.props.initBoard()}>Restart</button>
+        <button className="start-btn" type="button" onClick={() => this.props.initBoard(this.state.size)}>Restart</button>
+        <span> Size: </span>
+        <input type="number" name="size" value={this.state.size} onChange={(e) => this.onSizeChange(e)} />
         <div>
           {this.createBoard()}
         </div>

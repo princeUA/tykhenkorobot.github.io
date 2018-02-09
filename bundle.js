@@ -5790,7 +5790,9 @@ var Board = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      size: 15
+    };
     return _this;
   }
 
@@ -5828,6 +5830,13 @@ var Board = function (_Component) {
       });
     }
   }, {
+    key: 'onSizeChange',
+    value: function onSizeChange(e) {
+      this.setState({
+        size: e.target.value
+      });
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       var _this4 = this;
@@ -5856,10 +5865,18 @@ var Board = function (_Component) {
         _react2.default.createElement(
           'button',
           { className: 'start-btn', type: 'button', onClick: function onClick() {
-              return _this5.props.initBoard();
+              return _this5.props.initBoard(_this5.state.size);
             } },
           'Restart'
         ),
+        _react2.default.createElement(
+          'span',
+          null,
+          ' Size: '
+        ),
+        _react2.default.createElement('input', { type: 'number', name: 'size', value: this.state.size, onChange: function onChange(e) {
+            return _this5.onSizeChange(e);
+          } }),
         _react2.default.createElement(
           'div',
           null,
@@ -5922,9 +5939,9 @@ exports.default = function () {
   var maze = {};
   switch (action.type) {
     case _actions.INIT_BOARD:
-      for (var row = 0; row < defaultSize; row++) {
+      for (var row = 0; row < action.payload; row++) {
         board[row] = [];
-        for (var col = 0; col < defaultSize; col++) {
+        for (var col = 0; col < action.payload; col++) {
           var coordinate = row + '.' + col;
           board[row][col] = _extends({}, defaultCell);
           board[row][col].coordinate = coordinate;
@@ -5932,6 +5949,7 @@ exports.default = function () {
       }
       maze = {
         board: board,
+        size: action.payload,
         running: false,
         dirrection: 'down',
         path: []
@@ -5960,7 +5978,7 @@ exports.default = function () {
       maze = _extends({}, state.maze);
       var robotX = +maze.robotX;
       var robotY = +maze.robotY;
-      if (robotX == 0 || robotY == 0 || robotX == 14 || robotY == 14) {
+      if (robotX == 0 || robotY == 0 || robotX == maze.size - 1 || robotY == maze.size - 1) {
         maze.running = false;
         return _extends({}, state, { maze: maze });
       }
@@ -6048,6 +6066,7 @@ exports.default = function () {
       }
       maze = {
         board: board,
+        size: 15,
         running: false,
         dirrection: 'down',
         path: []

@@ -14,9 +14,9 @@ export default (state = null, action) => {
   let maze = {};
   switch (action.type) {
     case INIT_BOARD:
-      for (let row = 0; row < defaultSize; row++) {
+      for (let row = 0; row < action.payload; row++) {
         board[row] = [];
-        for (let col = 0; col < defaultSize; col++) {
+        for (let col = 0; col < action.payload; col++) {
           let coordinate = row+'.'+col;
           board[row][col] = {...defaultCell};
           board[row][col].coordinate = coordinate;
@@ -24,6 +24,7 @@ export default (state = null, action) => {
       }
       maze = {
         board: board,
+        size: action.payload,
         running: false,
         dirrection: 'down',
         path: []
@@ -52,7 +53,7 @@ export default (state = null, action) => {
       maze = {...state.maze};
       let robotX = +maze.robotX;
       let robotY = +maze.robotY;
-      if(robotX == 0 || robotY == 0 || robotX == 14 || robotY == 14){
+      if(robotX == 0 || robotY == 0 || robotX == maze.size - 1 || robotY == maze.size - 1){
         maze.running = false;
         return {...state, maze};
       }
@@ -148,6 +149,7 @@ export default (state = null, action) => {
       }
       maze = {
         board: board,
+        size: 15,
         running: false,
         dirrection: 'down',
         path: []
