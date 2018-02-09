@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+#root{
+    text-align: center;
+    margin-top: 50px;
+}
+.App{
+  display: inline-block;
+  padding: 20px;
+  border: 1px solid black;
+}
+.row{
+  height: 20px;
+}
+.cell{
+  text-align: center;
+  display: table-cell;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  background: grey;
+}
+.cell-opened{
+  background: #fff;
+}
+.cell-robot{
+  background: #2aff00;
+  &:after{
+    content: 'R';
+  }
+}
+.start-btn{
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
